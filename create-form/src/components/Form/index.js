@@ -1,5 +1,5 @@
-import {useEffect, useState} from 'react'
-
+import { useEffect, useState } from 'react'
+import './index.css'
 
 function Form() {
     const [name, setName] = useState("");
@@ -12,7 +12,7 @@ function Form() {
 
 
     useEffect(() => {
-         setValidationErrors([])
+        setValidationErrors([])
 
         if (!name) {
             setValidationErrors((validationErrors) => [...validationErrors, "What's your full name?"])
@@ -30,53 +30,58 @@ function Form() {
             setValidationErrors((validationErrors) => [...validationErrors, "Tell me about yourself please"])
         }
     },
-    [name, email, phoneNumber, radioButtons, bio, notifications]
+        [name, email, phoneNumber, radioButtons, bio, notifications]
     )
 
-    function handleSubmit(submit){
+    function handleSubmit(submit) {
         submit.preventDefault()
     }
 
     return (
-        <form onSubmit={(submit) => {
-            handleSubmit(submit)
-        }}>
-            <h2>Job Application Form</h2>
+        <div className="parent">
+            <form onSubmit={(submit) => {
+                handleSubmit(submit)
+            }}>
+                <div className="title">
+                    <h2>Job Application Form</h2>
+                </div>
 
-            { validationErrors.map((error) => {
-               return <p key={error}> { error } </p>
-            })}
 
-            <div>
-                <label text="name" > Name
-                    <input type="text" value={ name } onChange={(event) => setName(event.target.value)} />
+                {validationErrors.map((error) => {
+                    return <p key={error}> {error} </p>
+                })}
+
+                <div>
+                    <label text="name" > Name
+                    <input type="text" value={name} onChange={(event) => setName(event.target.value)} />
+                    </label>
+                </div>
+
+                <label text="email" > Email
+                <input type="text" value={email} onChange={(event) => setEmail(event.target.value)} />
                 </label>
+
+                <div>
+                    <label text="phone number" > Phone Number
+                    <input type="number" value={phoneNumber} onChange={(event) => setPhoneNumber(event.target.value)} />
+                    </label>
+                </div>
+
+                <div onChange={(event) => setRadioButton(event.target.value)}>
+                    <input type="radio" defaultChecked={radioButtons === "Student"} name="bio" value='Student' /> Student
+                <input type="radio" defaultChecked={radioButtons === "Instructor"} name="bio" value='Instructor' /> Instructor
             </div>
 
-            <label text="email" > Email
-                <input type="text" value={ email } onChange={(event) => setEmail(event.target.value)} />
-            </label>
+                <textarea value={bio} onChange={(event) => setBio(event.target.value)} />
 
-            <div>
-                <label text="phone number" > Phone Number
-                    <input type="number" value={ phoneNumber } onChange={(event) => setPhoneNumber(event.target.value)} />
-                </label>
-            </div>
+                <div>
+                    <input type="checkbox" value={notifications} onChange={(event) => setNotifications(event.target.value)} />
+                </div>
 
-            <div onChange={(event) => setRadioButton(event.target.value)}>
-                <input type="radio" defaultChecked={ radioButtons === "Student" } name="bio" value='Student'/> Student
-                <input type="radio" defaultChecked={ radioButtons === "Instructor" } name="bio" value='Instructor'/> Instructor
-            </div>
+                <button type='submit'> Submit </button>
 
-            <textarea value={ bio } onChange={(event) => setBio(event.target.value)} />
-
-            <div>
-                <input type="checkbox" value={ notifications } onChange={(event) => setNotifications(event.target.value)} />
-            </div>
-
-            <button type='submit'> Submit </button>
-
-        </form>
+            </form>
+        </div>
     )
 }
 
